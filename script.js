@@ -24,7 +24,13 @@ form.addEventListener('submit', async (e) => {
         }
 
         const result = await response.json();
-        responseMessage.textContent = result.message || "File uploaded successfully!";
+        
+        // Update the response message based on the result
+        if (result.error) {
+            responseMessage.textContent = `Error: ${result.error}`;
+        } else {
+            responseMessage.textContent = result.message || "File uploaded successfully!";
+        }
     } catch (error) {
         console.error("Upload failed:", error);
         responseMessage.textContent = "An error occurred while uploading.";
