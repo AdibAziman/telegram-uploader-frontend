@@ -14,14 +14,19 @@ form.addEventListener('submit', async (e) => {
     formData.append('file', fileInput.files[0]);
 
     try {
-        const response = await fetch('https://telegram-uploader-backend.onrender.com', { // Replace with your backend URL
+        const response = await fetch('https://telegram-uploader-backend.onrender.com/upload', { // Updated URL
             method: 'POST',
             body: formData,
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const result = await response.json();
-        responseMessage.textContent = result.message || result.error;
+        responseMessage.textContent = result.message || "File uploaded successfully!";
     } catch (error) {
+        console.error("Upload failed:", error);
         responseMessage.textContent = "An error occurred while uploading.";
     }
 });
