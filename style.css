@@ -1,33 +1,128 @@
+/* General body styles */
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f9;
+  padding: 20px;
+  background-color: #f0f4f8;
 }
 
-.container {
+/* Header styles */
+h1 {
   text-align: center;
+  color: #333;
+}
+
+/* Upload form styles */
+#uploadForm {
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  background: white;
-  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: #007bff;
+/* Input file styles */
+#uploadForm input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button styles */
+#uploadForm button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
   color: white;
+  font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #0056b3;
+#uploadForm button:hover {
+  background-color: #0056b3;
+}
+
+/* File preview container styles */
+.file-preview {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* File name styles */
+.file-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Progress bar container styles */
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+/* Progress bar styles */
+.progress-bar {
+  width: 80%;
+  height: 5px;
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 5px;
+}
+
+/* Response message styles */
+#responseMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+/* Queue container styles */
+.upload-queue {
+  margin-top: 30px;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Queue item styles */
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Completed item styles */
+.queue-item.completed {
+  background-color: #d4edda;
+}
+
+/* Failed item styles */
+.queue-item.failed {
+  background-color: #f8d7da;
 }
