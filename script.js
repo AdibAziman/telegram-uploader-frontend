@@ -14,7 +14,7 @@ form.addEventListener('submit', async (e) => {
     formData.append('file', fileInput.files[0]);
 
     try {
-        const response = await fetch('https://your-backend-url/upload', { // Replace with your backend URL
+        const response = await fetch('https://telegram-uploader-backend.onrender.com', { // Replace with your backend URL
             method: 'POST',
             body: formData,
         });
