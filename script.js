@@ -1,53 +1,66 @@
-const form = document.getElementById('uploadForm');
-const responseMessage = document.getElementById('responseMessage');
-const progressContainer = document.getElementById('progressContainer'); // Progress container
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('uploadForm');
+    const responseMessage = document.getElementById('responseMessage');
+    const queueList = document.getElementById('queueList'); // Ensure this element is retrieved correctly
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const fileInput = document.getElementById('fileInput');
-    const files = fileInput.files;
+        const fileInput = document.getElementById('fileInput');
+        if (!fileInput.files.length) {
+            responseMessage.textContent = "Please select files!";
+            return;
+        }
 
-    if (files.length === 0) {
-        responseMessage.textContent = "Please select files!";
-        return;
-    }
+        const files = fileInput.files;
+        const queue = Array.from(files);
+        
+        queue.forEach(file => {
+            const queueItem = document.createElement('div');
+            queueItem.classList.add('queue-item');
+            queueItem.textContent = file.name;
+            
+            // Create a progress bar container
+            const progressContainer = document.createElement('div');
+            progressContainer.classList.add('progress-container');
 
-    const formData = new FormData();
+            const progressBar = document.createElement('div');
+            progressBar.classList.add('progress-bar');
+            progressContainer.appendChild(progressBar);
 
-    // Append each file to formData
-    Array.from(files).forEach(file => {
-        formData.append('files', file);
-    });
+            queueItem.appendChild(progressContainer);
+            queueList.appendChild(queueItem);
 
-    // Create progress bar for each file
-    responseMessage.textContent = "Uploading files...";
-    Array.from(files).forEach((file, index) => {
-        const progress = document.createElement('div');
-        progress.classList.add('progress');
-        progress.id = `progress_${index}`;
-        progressContainer.appendChild(progress);
-    });
+            const formData = new FormData();
+            formData.append('file', file);
 
-    try {
-        const response = await fetch('https://telegram-uploader-backend.onrender.com/upload', {
-            method: 'POST',
-            body: formData,
+            uploadFileToServer(formData, progressBar, queueItem);
         });
+    });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+    async function uploadFileToServer(formData, progressBar, queueItem) {
+        try {
+            const response = await fetch('https://telegram-uploader-backend.onrender.com/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                progressBar.style.width = '100%';
+                queueItem.classList.add('completed');
+                queueItem.textContent = "File uploaded successfully!";
+            } else {
+                progressBar.style.width = '0%';
+                queueItem.classList.add('failed');
+                queueItem.textContent = "Upload failed!";
+            }
+        } catch (error) {
+            console.error("Upload failed:", error);
+            progressBar.style.width = '0%';
+            queueItem.classList.add('failed');
+            queueItem.textContent = "An error occurred!";
         }
-
-        const result = await response.json();
-
-        if (result.error) {
-            responseMessage.textContent = `Error: ${result.error}`;
-        } else {
-            responseMessage.textContent = result.message || "Files uploaded successfully!";
-        }
-    } catch (error) {
-        console.error("Upload failed:", error);
-        responseMessage.textContent = "An error occurred while uploading.";
     }
 });
