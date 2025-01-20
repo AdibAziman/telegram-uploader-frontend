@@ -48,18 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function uploadFileToServer(formData, progressBar, queueItem, sizeText, totalSize) {
         try {
-            const response = await fetch('https://telegram-uploader-backend.onrender.com/upload', {
-                method: 'POST',
-                body: formData,
-                // Using the XMLHttpRequest to track progress
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            });
-
-            // Tracking progress using XMLHttpRequest
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://telegram-uploader-backend.onrender.com/upload');
+
+            // Tracking progress using XMLHttpRequest
             xhr.upload.addEventListener('progress', (e) => {
                 if (e.lengthComputable) {
                     const percent = (e.loaded / e.total) * 100;
@@ -70,18 +62,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            xhr.send(formData);
+            // Once upload is complete, handle success or failure
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    progressBar.style.width = '100%';
+                    queueItem.classList.add('completed');
+                    queueItem.textContent = "File uploaded successfully!";
+                } else {
+                    progressBar.style.width = '0%';
+                    queueItem.classList.add('failed');
+                    queueItem.textContent = "Upload failed!";
+                }
+            };
 
-            const result = await response.json();
-            if (response.ok) {
-                progressBar.style.width = '100%';
-                queueItem.classList.add('completed');
-                queueItem.textContent = "File uploaded successfully!";
-            } else {
+            xhr.onerror = () => {
                 progressBar.style.width = '0%';
                 queueItem.classList.add('failed');
-                queueItem.textContent = "Upload failed!";
-            }
+                queueItem.textContent = "An error occurred!";
+            };
+
+            // Send the form data
+            xhr.send(formData);
         } catch (error) {
             console.error("Upload failed:", error);
             progressBar.style.width = '0%';
