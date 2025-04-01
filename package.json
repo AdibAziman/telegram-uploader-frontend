@@ -1,0 +1,19 @@
+{
+  "name": "telegram-uploader-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "form-data": "^4.0.1",
+    "multer": "^1.4.4-lts.1",
+    "node-fetch": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
