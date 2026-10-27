@@ -1,19 +1,23 @@
 {
-  "name": "telegram-uploader-backend",
-  "version": "1.0.0",
+  "name": "telegram-uploader-frontend",
+  "version": "2.0.0",
+  "description": "Fast, modern multi-file uploader for Telegram channels with live progress and queue management",
   "type": "module",
-  "main": "server.js",
+  "main": "serve.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node serve.js",
+    "dev": "node serve.js"
   },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "form-data": "^4.0.1",
-    "multer": "^1.4.4-lts.1",
-    "node-fetch": "^3.2.0"
-  },
+  "keywords": [
+    "telegram",
+    "uploader",
+    "file-upload",
+    "telegram-bot",
+    "queue-manager"
+  ],
+  "author": "Adib Aziman",
+  "license": "MIT",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   }
 }
